@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta Minecraft para Jonathan</title>
+    <!-- Fuente oficial estilo pixel de Minecraft -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Fondo animado estilo bloques oscuros */
+            background-color: #1e1e1e;
+            background-image: 
+                linear-gradient(45deg, #161616 25%, transparent 25%, transparent 75%, #161616 75%, #161616),
+                linear-gradient(45deg, #161616 25%, transparent 25%, transparent 75%, #161616 75%, #161616);
+            background-size: 64px 64px;
+            background-position: 0 0, 32px 32px;
+            animation: moverFondo 20s linear infinite;
+            
+            font-family: 'Press Start 2P', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 10px;
+            position: relative;
+            overflow-x: hidden;
+            color: #fff;
+        }
+
+        @keyframes moverFondo {
+            0% { background-position: 0 0, 32px 32px; }
+            100% { background-position: 64px 64px, 96px 96px; }
+        }
+
+        /* Partículas flotantes */
+        .corazon-fondo {
+            position: absolute;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            animation: flotar 8s infinite linear;
+            opacity: 0.6;
+            z-index: 1;
+        }
+
+        @keyframes flotar {
+            0% { transform: translateY(110vh) rotate(0deg) scale(1); opacity: 0.8; }
+            50% { opacity: 0.4; }
+            100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; }
+        }
+
+        .contenedor-principal {
+            max-width: 650px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            animation: entrar 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2;
+        }
+
+        /* HEADER MINECRAFT */
+        .header-minecraft {
+            text-align: center;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .logo-minecraft {
+            font-size: 32px;
+            color: #d1d1d1;
+            text-shadow: 
+                4px 4px 0 #000, 
+                -2px -2px 0 #555, 
+                2px -2px 0 #555, 
+                -2px 2px 0 #555, 
+                2px 2px 0 #555;
+            letter-spacing: 2px;
+            transform: scaleY(1.2);
+            margin: 0;
+        }
+
+        .pixel-icons {
+            display: flex;
+            justify-content: space-between;
+            font-size: 35px;
+            margin-top: -30px;
+            padding: 0 20px;
+            filter: drop-shadow(4px 4px 0px #000);
+        }
+
+        /* REPRODUCTOR DE MÚSICA MINERO (AUDIO DIRECTO) */
+        .reproductor-box {
+            background-color: #3c2415;
+            border: 4px solid #000;
+            box-shadow: inset 3px 3px 0px #8b5a2b, inset -3px -3px 0px #1a0f08, 0 6px 12px rgba(0,0,0,0.8);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            text-align: center;
+        }
+
+        .reproductor-titulo {
+            color: #ffaa00;
+            font-size: 10px;
+            text-shadow: 2px 2px 0px #000;
+            line-height: 1.5;
+        }
+
+        .btn-musica {
+            background-color: #555;
+            color: #fff;
+            border: 3px solid #000;
+            padding: 12px 18px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 9px;
+            cursor: pointer;
+            box-shadow: inset 2px 2px 0px #aaa, inset -2px -2px 0px #222;
+            transition: all 0.1s ease;
+        }
+
+        .btn-musica:active {
+            box-shadow: inset -2px -2px 0px #aaa, inset 2px 2px 0px #222;
+            transform: translateY(2px);
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 5px;
+            filter: invert(0.9);
+        }
+
+        /* LOGRO MINECRAFT */
+        .logro-container {
+            background-color: #212121;
+            border: 4px solid #000;
+            outline: 2px solid #555;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.8);
+            border-radius: 2px;
+        }
+
+        .logro-icono {
+            width: 46px;
+            height: 46px;
+            background-color: #111;
+            border: 3px solid #555;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .logro-texto {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .logro-header {
+            color: #ffff55;
+            font-size: 11px;
+            text-shadow: 2px 2px 0px #3f3f15;
+            text-transform: uppercase;
+        }
+
+        .logro-titulo {
+            color: #ffffff;
+            font-size: 13px;
+            text-shadow: 2px 2px 0px #3f3f3f;
+            line-height: 1.3;
+        }
+
+        /* PERSONAJE STEVE INTERACTIVO */
+        .steve-box {
+            background-color: #2b2b2b;
+            border: 4px solid #000;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            box-shadow: inset 3px 3px 0px #555, inset -3px -3px 0px #111;
+            text-align: center;
+        }
+
+        .bocadillo {
+            background-color: #ffffff;
+            color: #000;
+            padding: 12px 15px;
+            border: 3px solid #000;
+            font-size: 10px;
+            line-height: 1.6;
+            position: relative;
+            max-width: 90%;
+            border-radius: 4px;
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        .bocadillo::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: #000 transparent transparent transparent;
+        }
+
+        .steve-avatar {
+            width: 70px;
+            height: 70px;
+            background-color: #55aaff;
+            border: 4px solid #000;
+            box-shadow: inset 3px 3px 0px #88ccff, inset -3px -3px 0px #0055aa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+            user-select: none;
+        }
+
+        .steve-avatar:hover { transform: scale(1.08); }
+        .steve-avatar:active { transform: scale(0.95) translateY(5px); }
+        .steve-indicacion { color: #ffff55; font-size: 9px; text-shadow: 1px 1px 0px #000; }
+
+        /* CARTA */
+        .carta-box {
+            background-color: #c6c6c6;
+            border: 4px solid #000;
+            box-shadow: 
+                inset 4px 4px 0px #ffffff,
+                inset -4px -4px 0px #555555,
+                0 15px 25px rgba(0,0,0,0.9);
+            padding: 25px 20px;
+            position: relative;
+        }
+
+        /* CREEPER CSS ART ASOMÁNDOSE */
+        .creeper-asomado {
+            position: absolute;
+            top: -44px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: #2db13e;
+            border: 4px solid #000;
+            border-bottom: none;
+            box-shadow: inset 4px 4px 0 #5cd86b;
+            z-index: -1;
+            animation: asomarse 5s infinite alternate ease-in-out;
+        }
+        
+        .creeper-asomado::before {
+            content: ''; position: absolute;
+            top: 10px; left: 6px; width: 8px; height: 8px;
+            background-color: #000;
+            box-shadow: 12px 0 0 #000, 6px 8px 0 #000, 6px 14px 0 #000, 6px 18px 0 #000, 2px 14px 0 #000, 10px 14px 0 #000;
+        }
+
+        @keyframes asomarse {
+            0%, 70% { transform: translateY(40px); }
+            90%, 100% { transform: translateY(0); }
+        }
+
+        .carta-titulo {
+            color: #373737;
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 4px solid #555;
+            padding-bottom: 15px;
+            text-shadow: 2px 2px 0px #fff;
+        }
+
+        .carta-contenido {
+            color: #2b2b2b;
+            font-size: 11.5px;
+            line-height: 2.2;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 0px #e0e0e0;
+        }
+
+        .carta-contenido p {
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+
+        .resalte { color: #0000aa; font-weight: bold; }
+        .resalte-gold { color: #b8860b; font-weight: bold; }
+        .resalte-red { color: #aa0000; font-weight: bold; }
+
+        /* COFRE SECRETO INTERACTIVO */
+        .cofre-box {
+            background-color: #8b4513;
+            border: 4px solid #000;
+            box-shadow: inset 3px 3px 0px #cd853f, inset -3px -3px 0px #3a1e05, 0 6px 12px rgba(0,0,0,0.6);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cofre-box:hover { background-color: #a0522d; }
+        
+        .cofre-header {
+            display: flex; align-items: center; gap: 12px; color: #fff; font-size: 11px; text-shadow: 2px 2px 0px #000;
+        }
+
+        .cofre-icono { font-size: 28px; }
+
+        .cofre-contenido {
+            background-color: #1a1a1a; border: 3px solid #000; color: #55ff55;
+            padding: 12px; font-size: 10px; line-height: 1.8; width: 100%; text-align: center;
+            display: none; box-shadow: inset 2px 2px 0px #000;
+        }
+        .cofre-contenido.abierto { display: block; animation: aparecer 0.4s ease; }
+
+        /* ZONA DEL DRAGÓN DEL END */
+        .dragon-zona {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            border: 2px dashed #aa00aa;
+            background-color: #0d0d0d;
+            box-shadow: 0 0 15px #aa00aa;
+        }
+        
+        .dragon-titulo {
+            color: #ff55ff;
+            font-size: 12px;
+            text-shadow: 2px 2px 0 #000, 0 0 10px #aa00aa;
+            margin-bottom: 10px;
+        }
+
+        /* MARCOS DE VIDEOS */
+        .video-marco {
+            background-color: #8b8b8b;
+            border: 4px solid #373737;
+            box-shadow: inset 3px 3px 0px #373737, inset -3px -3px 0px #ffffff;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border: 3px solid #000;
+            background-color: #000;
+        }
+
+        .video-container iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        }
+
+        .link-respaldo {
+            display: block; text-align: center; color: #004080; font-size: 9px; margin-top: 10px; text-decoration: underline;
+        }
+
+        .btn-minecraft {
+            display: block; width: 100%; background-color: #707070; color: #ffffff;
+            text-align: center; padding: 14px; margin-top: 20px; text-decoration: none;
+            font-size: 12px; border: 3px solid #000; box-shadow: inset 3px 3px 0px #a0a0a0, inset -3px -3px 0px #303030;
+            text-shadow: 2px 2px 0px #000; cursor: pointer; font-family: 'Press Start 2P', cursive;
+        }
+        .btn-minecraft:active { box-shadow: inset -3px -3px 0px #a0a0a0, inset 3px 3px 0px #303030; transform: translateY(2px); }
+
+        @keyframes aparecer { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes entrar { from { opacity: 0; transform: translateY(40px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    </style>
+</head>
+<body>
+
+    <!-- Partículas en el fondo -->
+    <div class="corazon-fondo" style="left: 10%; animation-duration: 7s; animation-delay: 0s;">❤️</div>
+    <div class="corazon-fondo" style="left: 35%; animation-duration: 9s; animation-delay: 2s;">💎</div>
+    <div class="corazon-fondo" style="left: 70%; animation-duration: 6s; animation-delay: 4s;">🟢</div>
+    <div class="corazon-fondo" style="left: 85%; animation-duration: 8s; animation-delay: 1s;">✨</div>
+    <div class="corazon-fondo" style="left: 20%; animation-duration: 10s; animation-delay: 5s;">🍎</div>
+    <div class="corazon-fondo" style="left: 60%; animation-duration: 7.5s; animation-delay: 3s;">⛏️</div>
+
+    <div class="contenedor-principal">
+
+        <!-- HEADER MINECRAFT -->
+        <div class="header-minecraft">
+            <h1 class="logo-minecraft">MINECRAFT</h1>
+            <div class="pixel-icons">
+                <span>🗡️</span>
+                <span>⛏️</span>
+            </div>
+        </div>
+
+        <!-- REPRODUCTOR DE MÚSICA DE MINERO DIRECTO -->
+        <div class="reproductor-box">
+            <div class="reproductor-titulo">🎵 TOCADISCOS: ElRubius - MINERO ⛏️</div>
+            <button class="btn-musica" id="btn-reproducir" onclick="toggleMusica()">▶️ REPRODUCIR MINERO</button>
+            <audio id="audio-minero" loop preload="auto">
+                <source src="https://ia801503.us.archive.org/15/items/el-rubius-minero/ElRubius%20-%20Minero.mp3" type="audio/mpeg">
+                Tu navegador no soporta audio HTML5.
+            </audio>
+        </div>
+
+        <!-- LOGRO MINECRAFT -->
+        <div class="logro-container">
+            <div class="logro-icono">🏆</div>
+            <div class="logro-texto">
+                <span class="logro-header">¡Logro Obtenido!</span>
+                <span class="logro-titulo">Una Carta Especial Para Ti</span>
+            </div>
+        </div>
+
+        <!-- SECCIÓN INTERACTIVA DE STEVE (STIVEN) -->
+        <div class="steve-box">
+            <div class="bocadillo" id="bocadillo-texto">
+                ¡Hola Jonathan! Soy Steve. ¡Tócame para hablar conmigo! ⛏️
+            </div>
+            <div class="steve-avatar" onclick="hablarSteve()">
+                👦
+            </div>
+            <div class="steve-indicacion">👆 ¡Haz clic en Steve (Stiven) para interactuar!</div>
+        </div>
+
+        <!-- CARTA -->
+        <div class="carta-box">
+            <div class="creeper-asomado"></div> <!-- Creeper CSS escondido -->
+            
+            <div class="carta-titulo">📜 Mensaje Secreto :D</div>
+
+            <div class="carta-contenido">
+                <p>Hice esta carta inspirada en <span class="resalte">Minecraft</span> porque quería preparar algo súper especial para ti, algo que pudieras conservar tanto como un recuerdo <span class="resalte-gold">físico</span> como una experiencia <span class="resalte-gold">digital</span>.</p>
+
+                <p>Hola, <span class="resalte-red">Jonathan</span>, ¿cómo estás? Espero que estés muy bien. Como hoy es 10 de septiembre, quise hacer algo nuevo y original que nunca había hecho. Nos conocemos desde hace varios años y me pareció un detalle divertido, así que por este motivo estoy aquí ¯\_(ツ)_/¯</p>
+                
+                <p>Hemos compartido varios años escolares; nos hemos acompañado, reído y pasado genial. Aún recuerdo cuando fuimos a Bogotá por robótica hace un tiempo y trabajábamos en grupo haciendo un súper equipo con Enzo, Jerson, tú y yo.</p>
+                
+                <p>Para mí, el grado octavo fue muy especial porque los tenía a ustedes (a ti, a tu hermano y a Arete XD) acompañándome a la hora de salida del colegio. Me sentía muy cómodo con su compañía; jamás lo dije abiertamente, pero es verdad. Si a veces era fastidioso o regañón, solo lo hacía porque <span class="resalte">quería que hubiera un cambio positivo en ti</span>.</p>
+                
+                <p>Me encanta tu energía, es fantástica. Admiro muchísimo tu creatividad e ingenio; tienes mejor letra que yo y además, ¡sabes dibujar increíble!</p>
+                
+                <p>Tienes una familia increíble (tu papá, tu mamá y tus hermanos). ¡Espero que por fin tú y tu hermano ya no peleen cada día como si fuera un campeonato de PvP! ＼(^o^)／</p>
+                
+                <p>Espero que guardes esta carta con cariño. ¡Eres un gran amigo!</p>
+            </div>
+            
+            <!-- COFRE SECRETO INTERACTIVO -->
+            <div class="cofre-box" onclick="toggleCofre()" style="margin-bottom: 20px;">
+                <div class="cofre-header">
+                    <span class="cofre-icono" id="cofre-icono">📦</span>
+                    <div>
+                        <div>COFRE SECRETO</div>
+                        <div style="font-size: 8px; color: #ffcc00; margin-top: 4px;" id="cofre-estado">Toca para abrir</div>
+                    </div>
+                </div>
+                <div class="cofre-contenido" id="cofre-contenido">
+                    ✨ ¡HAS ENCONTRADO 64 DIAMANTES DE LA AMISTAD! 💎<br><br>
+                    "Los buenos amigos son como los diamantes en Minecraft: difíciles de encontrar, pero extremadamente valiosos."
+                </div>
+            </div>
+
+            <!-- ZONA DE LA DRAGONA DEL END -->
+            <div class="dragon-zona">
+                <div class="dragon-titulo">🐉 ZONA PROTEGIDA POR LA DRAGONA DEL END 🐉</div>
+                <p style="font-size: 9px; color: #d1d1d1; margin-bottom: 0;">Superaste el portal... ¡Disfruta de estos videos!</p>
+            </div>
+
+            <!-- VIDEO DEL GATO -->
+            <div class="video-marco">
+                <div class="video-container">
+                    <iframe src="https://www.youtube-nocookie.com/embed/Iygn6Ng_bvU?rel=0" title="I Let My Cat Play Minecraft" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <a href="https://youtu.be/Iygn6Ng_bvU" target="_blank" class="link-respaldo">¿No carga el video? Toca aquí para ver en YouTube</a>
+            </div>
+
+            <!-- SEGUNDO VIDEO AÑADIDO -->
+            <div class="video-marco">
+                <div class="video-container">
+                    <iframe src="https://www.youtube-nocookie.com/embed/W-D0tCwMb2o?rel=0" title="Segundo Video Especial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <a href="https://youtu.be/W-D0tCwMb2o" target="_blank" class="link-respaldo">¿No carga el video? Toca aquí para ver en YouTube</a>
+            </div>
+
+            <button class="btn-minecraft" onclick="hacerSonido(880)">¡Gracias por leer! ❤️</button>
+        </div>
+
+    </div>
+
+    <!-- SCRIPT INTERACTIVO -->
+    <script>
+        // Sistema de reproductor de audio directo de Minero
+        function toggleMusica() {
+            var audio = document.getElementById('audio-minero');
+            var btn = document.getElementById('btn-reproducir');
+            
+            if (audio.paused) {
+                audio.play().then(function() {
+                    btn.innerText = '⏸️ PAUSAR MINERO';
+                    btn.style.backgroundColor = '#2db13e';
+                }).catch(function(e) {
+                    alert("Toca la pantalla para permitir reproducir el audio.");
+                });
+            } else {
+                audio.pause();
+                btn.innerText = '▶️ REPRODUCIR MINERO';
+                btn.style.backgroundColor = '#555';
+            }
+        }
+
+        // Efecto de sonido retro al hacer clic
+        function hacerSonido(frecuencia) {
+            try {
+                var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                var osc = audioCtx.createOscillator();
+                var gain = audioCtx.createGain();
+                
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(frecuencia || 440, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime((frecuencia || 440) * 1.5, audioCtx.currentTime + 0.1);
+                
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.1);
+            } catch(e) {}
+        }
+
+        // Sistema de diálogo de Steve (Stiven)
+        var dialogoIndice = 0;
+        var frasesSteve = [
+            "¡Hola Jonathan! ¡Gracias por presionar aquí! 😊",
+            "Recordatorio: ¡Eres un crack dibujando! 🎨",
+            "¿Te acuerdas de cuando fuimos a Bogotá por robótica? 🤖",
+            "¡Cuidado con el Creeper que está arriba de la carta! 💥",
+            "¡Eres un gran constructor de redstone! 🔴⚙️",
+            "¡No te olvides de revisar el cofre secreto! 📦"
+        ];
+
+        function hablarSteve() {
+            hacerSonido(600);
+            dialogoIndice = (dialogoIndice + 1) % frasesSteve.length;
+            document.getElementById('bocadillo-texto').innerText = frasesSteve[dialogoIndice];
+        }
+
+        // Cofre Secreto
+        var cofreAbierto = false;
+        function toggleCofre() {
+            hacerSonido(300);
+            cofreAbierto = !cofreAbierto;
+            var contenido = document.getElementById('cofre-contenido');
+            var icono = document.getElementById('cofre-icono');
+            var estado = document.getElementById('cofre-estado');
+
+            if (cofreAbierto) {
+                contenido.classList.add('abierto');
+                icono.innerText = '🧰';
+                estado.innerText = '¡Cofre Abierto!';
+                estado.style.color = '#55ff55';
+            } else {
+                contenido.classList.remove('abierto');
+                icono.innerText = '📦';
+                estado.innerText = 'Toca para abrir';
+                estado.style.color = '#ffcc00';
+            }
+        }
+    </script>
+
+</body>
+</html>
